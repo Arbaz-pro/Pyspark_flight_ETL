@@ -42,14 +42,14 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------
     # BRONZE
     # ------------------------------------------------------------------
-#     print("\n" + "=" * 60)
-#     print("BRONZE LAYER")
-#     print("=" * 60)
-#     ingest_flights(spark)
-#     ingest_weather(spark)
-#     ingest_airports(spark)
-#     ingest_cancelled(spark)
-#     print("All datasets ingested successfully")
+    print("\n" + "=" * 60)
+    print("BRONZE LAYER")
+    print("=" * 60)
+    ingest_flights(spark)
+    ingest_weather(spark)
+    ingest_airports(spark)
+    ingest_cancelled(spark)
+    print("All datasets ingested successfully")
 
 # #     # ------------------------------------------------------------------
 # #     # SILVER

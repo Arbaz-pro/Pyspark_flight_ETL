@@ -162,7 +162,6 @@ def transform_flights_silver(spark: SparkSession) -> None:
     # ------------------------------------------------------------------
     # 1. Read Bronze parquet
     # ------------------------------------------------------------------
-    BRONZE_PATH = "/home/asus/data_lake/bronze/flights/"
     df = spark.read.parquet(BRONZE_PATH)
     df.cache()
     bronze_count = df.count()

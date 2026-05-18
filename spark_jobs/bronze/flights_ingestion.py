@@ -3,14 +3,12 @@ from configs.configs import BRONZE_BASE, RAW_BASE
 from spark_jobs.checks import profile_dataframe
 
 def ingest_flights(spark):
-    path="s3a://flight-etl-lake-arbaz/bronze/flights/"
 
     df = spark.read.csv(
         f"{RAW_BASE}/US_flights_2023.csv",
         header=True,
         inferSchema=True
-    )
-
+    ).limit(100000)
     # profile_dataframe(df)
 
     df.write.mode("overwrite").parquet(
