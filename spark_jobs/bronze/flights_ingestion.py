@@ -8,7 +8,7 @@ def ingest_flights(spark):
         f"{RAW_BASE}/US_flights_2023.csv",
         header=True,
         inferSchema=True
-    ).limit(100000)
+    )
     # profile_dataframe(df)
 
     df.write.mode("overwrite").parquet(

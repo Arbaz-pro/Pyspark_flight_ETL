@@ -58,9 +58,11 @@ ALERT_EMAIL  = Variable.get("flight_etl_email",         default_var="arbaz@examp
 # spark-submit flags shared across all tasks
 # ---------------------------------------------------------------------------
 _SPARK_FLAGS = " ".join([
-    "--master local[1]",
+    "--master spark://127.0.0.1:7077",
     f"--driver-memory {DRIVER_MEM}",
     "--packages org.apache.hadoop:hadoop-aws:3.3.4",
+    "--conf spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
+    "--conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem",
     "--conf spark.executor.heartbeatInterval=120s",
     "--conf spark.network.timeout=600s",
     "--conf spark.sql.shuffle.partitions=2",
@@ -98,7 +100,7 @@ default_args = {
     "owner": "arbaz",
     "depends_on_past": False,
     # Retry twice with a 5-minute wait so transient S3 errors self-heal
-    "retries": 2,
+    "retries": 0,
     "retry_delay": timedelta(minutes=5),
     "email_on_failure": True,
     "email_on_retry": False,
@@ -119,7 +121,8 @@ with DAG(
     # lands on a schedule (e.g. "0 3 * * *" for 3 AM daily).
     schedule_interval=None,
     catchup=False,
-    max_active_runs=1,          # prevent concurrent pipeline runs
+    max_active_runs=1,  
+    max_active_tasks=2,        # prevent concurrent pipeline runs
     tags=["spark", "etl", "flights", "s3"],
     doc_md="""
 ## Flight Pipeline

@@ -83,13 +83,14 @@ JOB_REGISTRY: dict[str, tuple[str, str]] = {
 def build_spark(app_name: str) -> SparkSession:
     return (
         SparkSession.builder
+        .master("spark://127.0.0.1:7077")
         .appName(app_name)
-        .config("spark.driver.memory", "4g")
+        .config("spark.driver.memory", "2g")
         .config("spark.sql.shuffle.partitions", "2")
-        .config(
-            "spark.jars.packages",
-            "org.apache.hadoop:hadoop-aws:3.3.4",
-        )
+        # .config(
+        #     "spark.jars.packages",
+        #     "org.apache.hadoop:hadoop-aws:3.3.4",
+        # )
         .config(
             "spark.hadoop.fs.s3a.aws.credentials.provider",
             "com.amazonaws.auth.DefaultAWSCredentialsProviderChain",
