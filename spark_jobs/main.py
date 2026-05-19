@@ -20,7 +20,6 @@ if __name__ == "__main__":
 
     spark = SparkSession.builder \
     .appName("Flight ETL Pipeline") \
-    .master("local[*]") \
     .config("spark.driver.memory", "4g") \
     .config("spark.sql.shuffle.partitions", "4") \
     .config(

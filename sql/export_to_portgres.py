@@ -1,4 +1,7 @@
 from pyspark.sql import SparkSession
+from configs.configs import SILVER_BASE
+
+
 
 spark = SparkSession.builder \
     .appName("ExportToPostgres") \
@@ -18,7 +21,7 @@ properties = {
 
 # Flights
 df = spark.read.parquet(
-    "/home/asus/data_lake/silver/flights/"
+    f"{SILVER_BASE}/flights/"
 )
 
 df.write \

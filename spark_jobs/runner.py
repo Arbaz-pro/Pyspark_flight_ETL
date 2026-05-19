@@ -83,7 +83,6 @@ JOB_REGISTRY: dict[str, tuple[str, str]] = {
 def build_spark(app_name: str) -> SparkSession:
     return (
         SparkSession.builder
-        .master("spark://127.0.0.1:7077")
         .appName(app_name)
         .config("spark.driver.memory", "2g")
         .config("spark.sql.shuffle.partitions", "2")
@@ -99,8 +98,6 @@ def build_spark(app_name: str) -> SparkSession:
             "spark.hadoop.fs.s3a.impl",
             "org.apache.hadoop.fs.s3a.S3AFileSystem",
         )
-        .config("spark.driver.host", "127.0.0.1")
-        .config("spark.driver.bindAddress", "127.0.0.1")
         .getOrCreate()
     )
 
